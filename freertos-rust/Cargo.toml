@@ -17,6 +17,12 @@ links = "freertos"
 name = "freertos_rust"
 path = "src/lib.rs"
 
+[dependencies]
+# For targets without hardware atomics (e.g. Cortex-M0/thumbv6m), provide Arc/Weak via software emulation
+[target.'cfg(not(target_has_atomic = "ptr"))'.dependencies]
+portable-atomic = { version = "1", features = ["critical-section"] }
+portable-atomic-util = { version = "0.2", features = ["alloc"] }
+
 [features]
 default = ["allocator", "sync", "time", "hooks", "interrupt", "delete_task"]
 allocator = []
