@@ -1,5 +1,5 @@
 [package]
-name = "freertos-rust-examples"
+name = "freertos-rust-examples-pd"
 version = "0.2.0"
 authors = ["Tobias Kaupat <tk@lobaro.de>"]
 edition = "2018"
@@ -10,7 +10,7 @@ keywords = ["FreeRTOS", "embedded", "demo", "examples"]
 repository = "https://github.com/lobaro/FreeRTOS-rust"
 
 [dependencies]
-freertos-rust = {path = "../freertos-rust"}
+freertos-rust-pd = {path = "../freertos-rust"}
 
 # Example: stm32-cortex-m3
 [target.thumbv7m-none-eabi.dependencies]
@@ -38,4 +38,4 @@ nrf9160-pac = {version = "0.12", features = ["rt"]}
 [target.x86_64-unknown-linux-gnu.dependencies]
 
 [build-dependencies]
-freertos-cargo-build = {path = "../freertos-cargo-build"}
+freertos-cargo-build-pd = {path = "../freertos-cargo-build"}

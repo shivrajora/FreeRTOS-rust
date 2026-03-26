@@ -60,7 +60,7 @@ jobs:
     - name: Install Rust
       uses: dtolnay/rust-toolchain@stable
     - name: Build
-      run: cargo build --verbose --no-default-features --features=sync,time,hooks,interrupt --package freertos-rust # Don't build the whole workspace because the examples use nightly features which will fail the build
+      run: cargo build --verbose --no-default-features --features=sync,time,hooks,interrupt --package freertos-rust-pd # Don't build the whole workspace because the examples use nightly features which will fail the build
 
   freertos-rust-examples:
     name: Build examples

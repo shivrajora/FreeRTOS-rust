@@ -1,5 +1,5 @@
 [package]
-name = "freertos-cargo-build"
+name = "freertos-cargo-build-pd"
 description = """
 Utility lib for building & using FreeRTOS in rust projects inside the build.rs.
 """
