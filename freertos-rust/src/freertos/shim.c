@@ -344,6 +344,12 @@ TaskHandle_t freertos_rs_get_current_task() {
 }
 #endif
 
+#if ( INCLUDE_xTaskAbortDelay == 1 )
+BaseType_t freertos_rs_task_abort_delay(void* task) {
+	return xTaskAbortDelay((TaskHandle_t)task);
+}
+#endif
+
 void freertos_rs_vTaskSuspendAll() {
   vTaskSuspendAll();
 }

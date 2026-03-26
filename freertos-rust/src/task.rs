@@ -234,6 +234,12 @@ impl Task {
         self.notify(TaskNotification::OverwriteValue(val))
     }
 
+    /// Aborts the delay this task is currently blocked on, if any.
+    /// Has no effect if the task is not in the Blocked state.
+    pub fn abort_delay(&self) {
+        unsafe { freertos_rs_task_abort_delay(self.task_handle); }
+    }
+
     /// Notify this task.
     pub fn notify(&self, notification: TaskNotification) {
         unsafe {

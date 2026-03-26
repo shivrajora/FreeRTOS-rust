@@ -166,6 +166,8 @@ extern "C" {
     ) -> FreeRtosBaseType;
     pub fn freertos_rs_timer_get_id(timer: FreeRtosTimerHandle) -> FreeRtosVoidPtr;
 
+    pub fn freertos_rs_task_abort_delay(task: FreeRtosTaskHandle) -> FreeRtosBaseType;
+
     pub fn freertos_rs_enter_critical();
     pub fn freertos_rs_exit_critical();
 
