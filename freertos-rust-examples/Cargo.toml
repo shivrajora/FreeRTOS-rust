@@ -1,13 +1,13 @@
 [package]
 name = "freertos-rust-examples-pd"
 version = "0.2.0"
-authors = ["Tobias Kaupat <tk@lobaro.de>"]
+authors = ["Tobias Kaupat <tk@lobaro.de>", "Shiv Rajora <rajora.shiv@gmail.com>"]
 edition = "2018"
 description = """
 Create to use FreeRTOS in rust projects. It contains binaries for demos on some architecutres.
 """
 keywords = ["FreeRTOS", "embedded", "demo", "examples"]
-repository = "https://github.com/lobaro/FreeRTOS-rust"
+repository = "https://github.com/shivrajora/FreeRTOS-rust"
 
 [dependencies]
 freertos-rust-pd = {path = "../freertos-rust"}

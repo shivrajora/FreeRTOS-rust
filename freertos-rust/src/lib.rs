@@ -10,7 +10,7 @@
 //! wrappers for FreeRTOS macros. The compiled Rust application should be linked to the
 //! base C/C++ firmware binary.
 //!
-//! Examples are provided inside [freertos-rust-examples](https://github.com/lobaro/FreeRTOS-rust/tree/master/freertos-rust-examples)
+//! Examples are provided inside [freertos-rust-examples](https://github.com/shivrajora/FreeRTOS-rust/tree/master/freertos-rust-examples)
 //!
 //! For more examples, check the enclosed GCC ARM/Rust/QEMU based unit tests. The project
 //! ``qemu_runner`` cross-compiles this library, compiles the main firmware using GCC ARM and links
