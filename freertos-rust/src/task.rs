@@ -59,6 +59,7 @@ pub struct TaskBuilder {
     task_name: String,
     task_stack_size: u16,
     task_priority: TaskPriority,
+    core_affinity: Option<u32>,
 }
 
 impl TaskBuilder {
@@ -80,18 +81,31 @@ impl TaskBuilder {
         self
     }
 
+    /// Set the core affinity bitmask (SMP only).
+    ///
+    /// Each bit corresponds to a core: `0b01` = core 0 only, `0b10` = core 1 only,
+    /// `0b11` = any core (default when not set).
+    pub fn core_affinity(&mut self, mask: u32) -> &mut Self {
+        self.core_affinity = Some(mask);
+        self
+    }
+
     /// Start a new task that can't return a value.
     pub fn start<F>(&self, func: F) -> Result<Task, FreeRtosError>
     where
         F: FnOnce(Task) -> (),
         F: Send + 'static,
     {
-        Task::spawn(
+        let task = Task::spawn(
             &self.task_name,
             self.task_stack_size,
             self.task_priority,
             func,
-        )
+        )?;
+        if let Some(mask) = self.core_affinity {
+            task.set_core_affinity(mask);
+        }
+        Ok(task)
     }
 }
 
@@ -102,6 +116,7 @@ impl Task {
             task_name: "rust_task".into(),
             task_stack_size: 1024,
             task_priority: TaskPriority(1),
+            core_affinity: None,
         }
     }
 
@@ -311,6 +326,26 @@ impl Task {
     pub fn set_id(&mut self, value: FreeRtosUBaseType) {
         unsafe { freertos_rs_vTaskSetTaskNumber(self.task_handle, value) };
     }
+
+    /// Set the core affinity bitmask for this task (SMP only).
+    ///
+    /// Bitmask: `0b01` = core 0 only, `0b10` = core 1 only, `0b11` = any core.
+    /// Has no effect when `configUSE_CORE_AFFINITY` is not enabled in FreeRTOSConfig.h.
+    pub fn set_core_affinity(&self, mask: u32) {
+        unsafe { freertos_rs_task_set_core_affinity(self.task_handle, mask as FreeRtosUBaseType) }
+    }
+
+    /// Get the core affinity bitmask for this task (SMP only).
+    pub fn get_core_affinity(&self) -> u32 {
+        unsafe { freertos_rs_task_get_core_affinity(self.task_handle) as u32 }
+    }
+}
+
+/// Returns the ID of the core that the calling task is currently running on (SMP only).
+///
+/// Returns 0 on single-core builds.
+pub fn get_core_id() -> u32 {
+    unsafe { freertos_rs_get_core_id() }
 }
 
 /// Helper methods to be performed on the task that is currently executing.

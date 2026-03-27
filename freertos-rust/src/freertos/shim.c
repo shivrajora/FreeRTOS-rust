@@ -432,6 +432,28 @@ void* freertos_rs_timer_get_id(TimerHandle_t timer) {
 
 #endif
 
+/* SMP: core affinity and core ID */
+uint32_t freertos_rs_get_core_id(void) {
+	return (uint32_t)portGET_CORE_ID();
+}
+
+#if (configUSE_CORE_AFFINITY == 1)
+void freertos_rs_task_set_core_affinity(TaskHandle_t task, UBaseType_t mask) {
+	vTaskCoreAffinitySet(task, mask);
+}
+UBaseType_t freertos_rs_task_get_core_affinity(TaskHandle_t task) {
+	return vTaskCoreAffinityGet(task);
+}
+#else
+void freertos_rs_task_set_core_affinity(TaskHandle_t task, UBaseType_t mask) {
+	(void)task; (void)mask;
+}
+UBaseType_t freertos_rs_task_get_core_affinity(TaskHandle_t task) {
+	(void)task;
+	return (UBaseType_t)(-1); /* all cores */
+}
+#endif
+
 void freertos_rs_enter_critical() {
 	taskENTER_CRITICAL();
 }

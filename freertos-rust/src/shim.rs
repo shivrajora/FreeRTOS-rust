@@ -168,6 +168,10 @@ extern "C" {
 
     pub fn freertos_rs_task_abort_delay(task: FreeRtosTaskHandle) -> FreeRtosBaseType;
 
+    pub fn freertos_rs_get_core_id() -> u32;
+    pub fn freertos_rs_task_set_core_affinity(task: FreeRtosTaskHandle, mask: FreeRtosUBaseType);
+    pub fn freertos_rs_task_get_core_affinity(task: FreeRtosTaskHandle) -> FreeRtosUBaseType;
+
     pub fn freertos_rs_enter_critical();
     pub fn freertos_rs_exit_critical();
 
